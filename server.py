@@ -16,14 +16,14 @@ def start_server(handlers: bs.BattleSnakeHandlers):
         handlers.start(flask.request.get_json())
         return "ok"
 
+    @app.post("/move")
+    def on_move():
+        return handlers.get_move(flask.request.get_json())
+
     @app.post("/end")
     def on_stop():
         handlers.stop()
         return "ok"
-
-    @app.post("/move")
-    def on_move():
-        return handlers.get_move(flask.request.get_json())
 
     @app.after_request
     def identify_request(response):
