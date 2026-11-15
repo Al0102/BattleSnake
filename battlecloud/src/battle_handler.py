@@ -1,4 +1,3 @@
-import random
 from typing import Dict
 
 import SnAkePI as BattleAPI
@@ -38,10 +37,25 @@ class BattleSnakeHandlers:
         max_safety = max(move_safeties.values())
 
         move = "down"
-        for direction, safety in move_safeties.items():
-            if safety == max_safety:
-                move = direction
+        if max_safety <= BattleAPI.UNSAFE:
+            return BattleAPI.create_move(move)
 
+        available = []
+        for direction, safety in move_safeties.items():
+            if safety > BattleAPI.UNSAFE:
+                available.append([direction, safety])
+
+        available.sort(key=lambda x: x[1], reverse=True)
+        moves = list(map(lambda x: x[0], available))
+
+        # move = BattleAPI.asearch(state, moves)
+        # if move is None:
+        move = moves[0]
+
+        print("Available: ", available)
+        print("Moves: ", moves)
+        print("Move: ", move)
+        print("Safeties: ", move_safeties)
         move = BattleAPI.create_move(move)
 
         return move
