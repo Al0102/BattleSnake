@@ -48,9 +48,9 @@ class BattleSnakeHandlers:
         available.sort(key=lambda x: x[1], reverse=True)
         moves = list(map(lambda x: x[0], available))
 
-        # move = BattleAPI.asearch(state, moves)
-        # if move is None:
-        move = moves[0]
+        move = BattleAPI.asearch(state, moves)
+        if move is None:
+            move = moves[0]
 
         print("Available: ", available)
         print("Moves: ", moves)

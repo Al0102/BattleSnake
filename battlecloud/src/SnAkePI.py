@@ -71,16 +71,16 @@ def asearch(state: Dict, safety: List) -> str | None:
 
     dx = distance_x(head, closest)
     dy = distance_y(head, closest)
-    if dx < dy:
-        if closest["x"] > head_x and "right" in safety:
-            return "right"
-        if closest["x"] < head_x and "left" in safety:
-            return "left"
-    else:
-        if closest["y"] > head_y and "up" in safety:
-            return "up"
-        if closest["y"] < head_y and "down" in safety:
-            return "down"
+    # if dx < dy:
+    if closest["x"] > head_x and "right" in safety:
+        return "right"
+    if closest["x"] < head_x and "left" in safety:
+        return "left"
+    # else:
+    if closest["y"] > head_y and "up" in safety:
+        return "up"
+    if closest["y"] < head_y and "down" in safety:
+        return "down"
     return None
 
 
