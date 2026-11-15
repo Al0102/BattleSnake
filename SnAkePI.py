@@ -1,0 +1,34 @@
+from typing import Dict, List
+
+AVAILABLE_MOVES = ("up", "down", "left", "right")
+UNSAFE = -1.0
+
+def get_head(state: Dict) -> Dict: return state["you"]["head"]
+def get_tail(state: Dict) -> List: return state["you"]["body"][1::]
+def get_neck(state: Dict) -> Dict: return get_tail(state)[0]
+
+def create_move(move: str):
+    return {"move": move}
+
+def create_safety_check():
+    return {move: 0.0 for move in AVAILABLE_MOVES}
+
+def validate_move_safety(state: Dict) -> Dict:
+    safety = validate_backwards_move(state)
+    return safety
+
+def validate_backwards_move(state: Dict, safety: Dict | None = None) -> Dict:
+    if safety is None: safety = create_safety_check()
+
+    if get_neck(state)["x"] < get_head(state)["x"]:
+        safety["left"] += UNSAFE
+    elif get_neck(state)["x"] > get_head(state)["x"]:
+        safety["right"] += UNSAFE
+    elif get_neck(state)["y"] < get_head(state)["y"]:
+        safety["down"] += UNSAFE
+    elif get_neck(state)["y"] > get_head(state)["y"]:
+        safety["up"] += UNSAFE
+    return safety
+
+
+
