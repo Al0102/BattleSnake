@@ -3,12 +3,21 @@ from typing import Dict, List
 AVAILABLE_MOVES = ("up", "down", "left", "right")
 UNSAFE = -1.0
 
-def get_right_bound(state: Dict) -> int: return state["width"] - 1
-def get_top_bound(state: Dict) -> int: return state["height"] - 1
+
+def get_right_bound(state: Dict) -> int: return state["board"]["width"] - 1
+
+
+def get_top_bound(state: Dict) -> int: return state["board"]["height"] - 1
+
 
 def get_head(state: Dict) -> Dict: return state["you"]["head"]
+
+
 def get_tail(state: Dict) -> List: return state["you"]["body"][1::]
+
+
 def get_neck(state: Dict) -> Dict: return get_tail(state)[0]
+
 
 def create_move(move: str):
     return {"move": move}
@@ -19,6 +28,7 @@ def create_safety_check():
 def validate_move_safety(state: Dict) -> Dict:
     safety = validate_backwards_move(state)
     validate_bounds(state, safety)
+    print(safety)
     return safety
 
 def validate_backwards_move(state: Dict, safety: Dict | None = None) -> Dict:
@@ -41,11 +51,12 @@ def validate_bounds(state: Dict, safety: Dict | None = None) -> Dict:
         safety["left"] += UNSAFE
     elif get_head(state)["x"] == get_right_bound(state):
         safety["right"] += UNSAFE
-    elif get_head(state)["y"] == 0:
+    if get_head(state)["y"] == 0:
         safety["down"] += UNSAFE
     elif get_head(state)["y"] == get_top_bound(state):
         safety["up"] += UNSAFE
 
     return safety
 
-
+if __name__ == "__main__":
+    print(create_safety_check())

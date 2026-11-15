@@ -38,7 +38,7 @@ class BattleSnakeHandlers:
         max_safety = max(move_safeties.values())
 
         move = "down"
-        for direction, safety in move_safeties:
+        for direction, safety in move_safeties.items():
             if safety == max_safety:
                 move = direction
 
