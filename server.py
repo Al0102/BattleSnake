@@ -22,7 +22,7 @@ def start_server(handlers: bs.BattleSnakeHandlers):
 
     @app.post("/end")
     def on_stop():
-        handlers.stop()
+        handlers.stop(flask.request.get_json())
         return "ok"
 
     @app.after_request
