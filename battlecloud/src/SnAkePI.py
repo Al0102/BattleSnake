@@ -18,6 +18,7 @@ def create_safety_check():
 
 def validate_move_safety(state: Dict) -> Dict:
     safety = validate_backwards_move(state)
+    validate_bounds(state, safety)
     return safety
 
 def validate_backwards_move(state: Dict, safety: Dict | None = None) -> Dict:
@@ -38,11 +39,11 @@ def validate_bounds(state: Dict, safety: Dict | None = None) -> Dict:
 
     if get_head(state)["x"] == 0:
         safety["left"] += UNSAFE
-    elif get_head(state)["x"] == get_right():
+    elif get_head(state)["x"] == get_right_bound(state):
         safety["right"] += UNSAFE
     elif get_head(state)["y"] == 0:
         safety["down"] += UNSAFE
-    elif get_head(state)["y"] == get_top():
+    elif get_head(state)["y"] == get_top_bound(state):
         safety["up"] += UNSAFE
 
     return safety

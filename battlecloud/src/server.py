@@ -1,8 +1,9 @@
-
 import os
 import logging
 import flask
-import handlers as bs
+from workers import WorkerEntrypoint, wsgi
+
+import battle_handler as bs
 
 def start_server(handlers: bs.BattleSnakeHandlers):
     app = flask.Flask("BattleSnakeTest")
@@ -32,14 +33,6 @@ def start_server(handlers: bs.BattleSnakeHandlers):
         )
         return response
 
-    host = "0.0.0.0"
-    port = int(os.environ.get("PORT", "8000"))
-
-    logging.getLogger("werkzeug").setLevel(logging.ERROR)
-
-    print(f"\nRunning Battlesnake at http://{host}:{port}")
-    app.run(host=host, port=port)
-
-
+    return app
 
 

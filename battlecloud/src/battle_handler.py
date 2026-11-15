@@ -34,5 +34,14 @@ class BattleSnakeHandlers:
         print("Game STOPPED")
 
     def get_move(self, state: Dict) -> Dict:
-        move = BattleAPI.create_move(random.choice(BattleAPI.AVAILABLE_MOVES))
+        move_safeties: Dict = BattleAPI.validate_move_safety(state)
+        max_safety = max(move_safeties.values())
+
+        move = "down"
+        for direction, safety in move_safeties:
+            if safety == max_safety:
+                move = direction
+
+        move = BattleAPI.create_move(move)
+
         return move
